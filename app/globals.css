@@ -88,6 +88,7 @@ body{background:var(--bg)!important;color:var(--ink)!important}.alt{background:v
 @media(max-width:760px){
   .shell{width:min(100% - 36px,1280px)}
   .hero{min-height:680px}
+  .hero:after{display:none} /* Hide massive watermark on mobile */
   .grid,.cards{grid-template-columns:1fr}
   .card{min-height:260px;border-bottom:1px solid var(--line);border-right:none}
   .section h1{font-size:64px}

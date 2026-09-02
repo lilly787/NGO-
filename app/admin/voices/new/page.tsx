@@ -1,0 +1,1 @@
+import {isAdmin} from "@/lib/auth";import {redirect} from "next/navigation";import {ContentForm} from "@/components/content-form";export default async function NewVoice(){if(!await isAdmin())redirect("/admin/login");return <><h1>Add GSEI Voices article</h1><ContentForm kind="voice"/></>}

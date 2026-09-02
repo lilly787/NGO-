@@ -1,0 +1,1 @@
+import {isAdmin} from "@/lib/auth";import {redirect} from "next/navigation";import {ContentForm} from "@/components/content-form";export default async function NewNews(){if(!await isAdmin())redirect("/admin/login");return <><h1>Add news</h1><ContentForm kind="news"/></>}

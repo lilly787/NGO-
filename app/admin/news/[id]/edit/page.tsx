@@ -1,0 +1,2 @@
+import {notFound,redirect} from "next/navigation";import {isAdmin} from "@/lib/auth";import {prisma} from "@/lib/prisma";import {ContentForm} from "@/components/content-form";
+export default async function EditNews({params}:{params:Promise<{id:string}>}){if(!await isAdmin())redirect("/admin/login");const {id}=await params;const item=await prisma.news.findUnique({where:{id}});if(!item)notFound();return <><p className="eyebrow">News &amp; Stories</p><h1>Edit news</h1><ContentForm kind="news" item={item}/></>}

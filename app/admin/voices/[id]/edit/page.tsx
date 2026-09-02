@@ -1,0 +1,2 @@
+import {notFound,redirect} from "next/navigation";import {isAdmin} from "@/lib/auth";import {prisma} from "@/lib/prisma";import {ContentForm} from "@/components/content-form";
+export default async function EditVoice({params}:{params:Promise<{id:string}>}){if(!await isAdmin())redirect("/admin/login");const {id}=await params;const item=await prisma.voice.findUnique({where:{id}});if(!item)notFound();return <><p className="eyebrow">GSEI Voices</p><h1>Edit article</h1><ContentForm kind="voice" item={item}/></>}

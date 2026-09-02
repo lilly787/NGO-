@@ -1,0 +1,1 @@
+import {isAdmin} from "@/lib/auth";import {redirect} from "next/navigation";export default async function Admin(){if(!await isAdmin())redirect("/admin/login");return <><p className="eyebrow">Dashboard</p><h1>Welcome to GSEI Admin</h1><p>Use News &amp; Stories or GSEI Voices to create, edit, publish, or remove content.</p></>}

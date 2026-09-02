@@ -76,14 +76,17 @@ body{background:var(--bg)!important;color:var(--ink)!important}.alt{background:v
 
 @keyframes lift{from{opacity:0;transform:translateY(40px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(0)}}
 
-@media(max-width:760px){
-  .shell{width:min(100% - 36px,1280px)}
+@media(max-width:1050px){
   .nav{height:auto;padding:18px 0;flex-wrap:wrap;align-items:center}
   .nav-burger{display:flex}
   .links{display:none;width:100%;flex-direction:column;gap:0;padding:16px 0;border-top:1px solid var(--line)}
   .nav-toggle-input:checked ~ .links{display:flex}
   .links a{padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
   .links a:after{display:none}
+}
+
+@media(max-width:760px){
+  .shell{width:min(100% - 36px,1280px)}
   .hero{min-height:680px}
   .grid,.cards{grid-template-columns:1fr}
   .card{min-height:260px;border-bottom:1px solid var(--line);border-right:none}
@@ -93,6 +96,7 @@ body{background:var(--bg)!important;color:var(--ink)!important}.alt{background:v
   .impact-grid{grid-template-columns:repeat(2,1fr)}
   .volunteer-roles{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr}
+  .brand small{display:none}
 }
 
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}

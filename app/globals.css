@@ -91,7 +91,7 @@ body{background:var(--bg)!important;color:var(--ink)!important}.alt{background:v
   .hero:after{display:none} /* Hide massive watermark on mobile */
   .grid,.cards{grid-template-columns:1fr}
   .card{min-height:260px;border-bottom:1px solid var(--line);border-right:none}
-  .section h1{font-size:64px}
+  .section h1{font-size:clamp(40px, 10vw, 52px); overflow-wrap: break-word; hyphens: auto;}
   .feature{padding:26px}
   .shf-pillars{grid-template-columns:1fr}
   .impact-grid{grid-template-columns:repeat(2,1fr)}

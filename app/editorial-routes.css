@@ -1,1 +1,166 @@
-.route-frame,.listing-frame{position:relative;max-width:1050px;min-height:530px;padding:clamp(28px,5vw,68px);border:1px solid rgba(255,255,255,.1);background:linear-gradient(135deg,rgba(255,255,255,.05) 35%,rgba(255,255,255,.02));box-shadow:0 24px 60px rgba(0,0,0,.3);overflow:hidden;border-radius:32px}.route-frame:after,.listing-frame:after{content:"GSEI";position:absolute;right:-.07em;bottom:-.35em;font:700 clamp(120px,23vw,320px)/.8 "Inter",sans-serif;letter-spacing:-.12em;color:rgba(255,255,255,.03);pointer-events:none}.route-frame h1,.listing-frame h1{position:relative;z-index:1;max-width:800px;font-size:clamp(54px,8vw,112px)!important;margin:0 0 52px!important;color:var(--ink)}.route-index{position:absolute;right:32px;top:29px;font:10px "DM Mono",monospace;letter-spacing:.1em;color:var(--orchid);text-transform:uppercase}.route-copy{position:relative;z-index:1;max-width:650px}.route-copy p{padding:18px 0;margin:0;border-top:1px solid var(--line);font-size:clamp(17px,2vw,22px);line-height:1.55;color:var(--muted)}.route-copy p:first-child{border-top:0}.listing-intro{position:relative;z-index:1;max-width:520px;font-size:18px;line-height:1.6;color:var(--muted)}.voice-feature{position:relative;z-index:1;max-width:100%;margin-top:70px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}.voice-feature .eyebrow{grid-column:1/-1}.voice-feature h2{margin:0;font:600 clamp(32px,4.3vw,62px)/1.05 "Playfair Display",serif;letter-spacing:-.03em}.voice-feature p{margin:0;color:var(--muted)}.voice-feature .button{grid-column:2;grid-row:2/span 2}.news-list{position:relative;z-index:1;display:grid;gap:16px;margin-top:60px}.news-list .feature{max-width:none}.news-list h2{font:600 clamp(29px,4vw,55px)/1.05 "Playfair Display",serif;letter-spacing:-.03em}@media(max-width:700px){.route-frame,.listing-frame{min-height:unset;padding:28px}.route-frame:after,.listing-frame:after{display:none}.route-index{position:static;margin-bottom:34px}.route-frame h1,.listing-frame h1{font-size:52px!important;margin-bottom:32px!important}.voice-feature{display:block;margin-top:40px}.voice-feature h2{margin-bottom:20px}.voice-feature p{margin-bottom:24px}.voice-feature .button{margin-top:20px}.route-copy p{font-size:17px}}
+.route-frame,
+.listing-frame {
+    position: relative;
+    max-width: 1050px;
+    min-height: 530px;
+    padding: clamp(28px, 5vw, 68px);
+    border: 1px solid rgba(255, 255, 255, .1);
+    background: linear-gradient(135deg, rgba(255, 255, 255, .05) 35%, rgba(255, 255, 255, .02));
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .3);
+    overflow: hidden;
+    border-radius: 32px
+}
+
+.route-frame:after,
+.listing-frame:after {
+    content: "GSEI";
+    position: absolute;
+    right: -.07em;
+    bottom: -.35em;
+    font: 700 clamp(120px, 23vw, 320px)/.8 "Inter", sans-serif;
+    letter-spacing: -.12em;
+    color: rgba(255, 255, 255, .03);
+    pointer-events: none
+}
+
+.route-frame h1,
+.listing-frame h1 {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    font-size: clamp(54px, 8vw, 112px) !important;
+    margin: 0 0 52px !important;
+    color: var(--ink)
+}
+
+.route-index {
+    position: absolute;
+    right: 32px;
+    top: 29px;
+    font: 10px "DM Mono", monospace;
+    letter-spacing: .1em;
+    color: var(--orchid);
+    text-transform: uppercase
+}
+
+.route-copy {
+    position: relative;
+    z-index: 1;
+    max-width: 650px
+}
+
+.route-copy p {
+    padding: 18px 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+    font-size: clamp(17px, 2vw, 22px);
+    line-height: 1.55;
+    color: var(--muted)
+}
+
+.route-copy p:first-child {
+    border-top: 0
+}
+
+.listing-intro {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--muted)
+}
+
+.voice-feature {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    margin-top: 70px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: end
+}
+
+.voice-feature .eyebrow {
+    grid-column: 1/-1
+}
+
+.voice-feature h2 {
+    margin: 0;
+    font: 600 clamp(32px, 4.3vw, 62px)/1.05 "Playfair Display", serif;
+    letter-spacing: -.03em
+}
+
+.voice-feature p {
+    margin: 0;
+    color: var(--muted)
+}
+
+.voice-feature .button {
+    grid-column: 2;
+    grid-row: 2/span 2
+}
+
+.news-list {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 16px;
+    margin-top: 60px
+}
+
+.news-list .feature {
+    max-width: none
+}
+
+.news-list h2 {
+    font: 600 clamp(29px, 4vw, 55px)/1.05 "Playfair Display", serif;
+    letter-spacing: -.03em
+}
+
+@media(max-width:700px) {
+
+    .route-frame,
+    .listing-frame {
+        min-height: unset;
+        padding: 28px
+    }
+
+    .route-frame:after,
+    .listing-frame:after {
+        display: none
+    }
+
+    .route-index {
+        position: static;
+        margin-bottom: 34px
+    }
+
+    .route-frame h1,
+    .listing-frame h1 {
+        font-size: 52px !important;
+        margin-bottom: 32px !important
+    }
+
+    .voice-feature {
+        display: block;
+        margin-top: 40px
+    }
+
+    .voice-feature h2 {
+        margin-bottom: 20px
+    }
+
+    .voice-feature p {
+        margin-bottom: 24px
+    }
+
+    .voice-feature .button {
+        margin-top: 20px
+    }
+
+    .route-copy p {
+        font-size: 17px
+    }
+}

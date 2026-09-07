@@ -2,9 +2,9 @@
 import { prisma } from "@/lib/prisma";
 
 export async function submitContact(formData: FormData) {
-  const name = String(formData.get("name"));
-  const email = String(formData.get("email"));
-  const message = String(formData.get("message"));
+  const name = formData.get("name")?.toString().trim();
+  const email = formData.get("email")?.toString().trim();
+  const message = formData.get("message")?.toString().trim();
 
   if (!name || !email || !message) {
     return { error: "Please fill in all fields." };

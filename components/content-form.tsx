@@ -1,7 +1,8 @@
 "use client";
-import { useRef } from "react";
 import { save } from "@/app/admin/actions";
 import type { Kind } from "@/lib/cms";
+import { RichTextEditor } from "@/components/rich-text-editor";
+import { ImageUploader } from "@/components/image-uploader";
 
 export function ContentForm({ kind, item }: { kind: Kind; item?: any }) {
   return (
@@ -24,26 +25,19 @@ export function ContentForm({ kind, item }: { kind: Kind; item?: any }) {
         </>
       )}
 
-      <label>
-        Featured image URL (optional)
-        <input
-          name="featuredImage"
-          type="url"
-          defaultValue={item?.featuredImage || ""}
-        />
-      </label>
+      <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+        <span style={{ fontSize: "14px", fontWeight: 500 }}>Featured image <small style={{ fontWeight: 400, color: "var(--muted)" }}>(optional)</small></span>
+        <ImageUploader name="featuredImage" defaultValue={item?.featuredImage || ""} />
+      </div>
 
       <label>
         Content
         <small style={{ fontWeight: 400, color: "var(--muted)", marginTop: 4 }}>
           HTML supported: &lt;p&gt; &lt;h2&gt; &lt;h3&gt; &lt;strong&gt; &lt;em&gt; &lt;ul&gt; &lt;ol&gt; &lt;li&gt; &lt;a&gt; &lt;blockquote&gt; &lt;img&gt;
         </small>
-        <textarea
-          name="content"
-          rows={16}
-          defaultValue={item?.content ?? ""}
-          required
-        />
+        <div style={{ marginTop: "12px" }}>
+          <RichTextEditor name="content" defaultValue={item?.content ?? ""} />
+        </div>
       </label>
 
       {kind === "voice" && (

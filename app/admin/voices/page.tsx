@@ -1,6 +1,151 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/auth";
-import { list } from "@/lib/cms";
-import { remove } from "@/app/admin/actions";
-export default async function VoicesAdmin(){if(!await isAdmin())redirect("/admin/login");const items=await list("voice");return <><p className="eyebrow">Content management</p><h1>GSEI Voices</h1><p><Link className="button primary" href="/admin/voices/new">Add article</Link></p>{items.length?<div className="admin-list">{items.map(item=><article className="feature" key={item.id}><p className="eyebrow">{item.status.toLowerCase()}</p><h2>{item.title}</h2><p>By {item.authorName}</p><div className="actions"><Link className="button" href={`/admin/voices/${item.id}/edit`}>Edit</Link><form action={remove.bind(null,"voice",item.id)}><button className="button danger">Delete</button></form></div></article>)}</div>:<div className="empty">No GSEI Voices articles have been created yet.</div>}</>}
+import { prisma } from "@/lib/prisma";
+import { remove, setStatus } from "@/app/admin/actions";
+import { ContentStatus } from "@prisma/client";
+
+export default async function VoicesAdmin({
+  searchParams,
+}: {
+  searchParams: Promise<{ filter?: string }>;
+}) {
+  if (!await isAdmin()) redirect("/admin/login");
+
+  const { filter } = await searchParams;
+  const where =
+    filter === "published" ? { status: ContentStatus.PUBLISHED } :
+    filter === "draft"     ? { status: ContentStatus.DRAFT }     :
+    {};
+
+  const items = await prisma.voice.findMany({ where, orderBy: { updatedAt: "desc" } });
+
+  return (
+    <>
+      <p className="eyebrow">Content management</p>
+      <h1>GSEI Voices</h1>
+
+      {/* Toolbar */}
+      <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center", marginBottom: "32px" }}>
+        <Link className="button primary" href="/admin/voices/new">+ Add Voice</Link>
+        <div style={{ display: "flex", gap: "8px", marginLeft: "auto" }}>
+          {(["all", "published", "draft"] as const).map(f => (
+            <Link
+              key={f}
+              href={f === "all" ? "/admin/voices" : `/admin/voices?filter=${f}`}
+              className="button"
+              style={{
+                fontSize: "13px",
+                minHeight: "38px",
+                padding: "8px 16px",
+                background: (filter === f || (!filter && f === "all")) ? "var(--plum)" : "transparent",
+                borderColor: (filter === f || (!filter && f === "all")) ? "var(--plum)" : "var(--line)",
+              }}
+            >
+              {f.charAt(0).toUpperCase() + f.slice(1)}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {items.length ? (
+        <div style={{ display: "grid", gap: "16px" }}>
+          {items.map(item => (
+            <article
+              key={item.id}
+              style={{
+                display: "grid",
+                gridTemplateColumns: item.featuredImage ? "80px 1fr auto" : "1fr auto",
+                gap: "16px",
+                alignItems: "center",
+                padding: "20px 24px",
+                border: "1px solid var(--line)",
+                borderRadius: "16px",
+                background: "linear-gradient(135deg, rgba(176,112,230,0.04), transparent)",
+              }}
+            >
+              {/* Thumbnail */}
+              {item.featuredImage && (
+                <img
+                  src={item.featuredImage}
+                  alt=""
+                  style={{ width: "80px", height: "60px", objectFit: "cover", borderRadius: "8px", flexShrink: 0 }}
+                />
+              )}
+
+              {/* Info */}
+              <div>
+                <p style={{ margin: "0 0 4px", fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: ".1em", textTransform: "uppercase", color: item.status === "PUBLISHED" ? "var(--orchid)" : "var(--muted)" }}>
+                  {item.status.toLowerCase()}
+                  {item.publishedAt && ` · ${new Date(item.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}`}
+                </p>
+                <p style={{ margin: "0 0 2px", fontWeight: 600, fontSize: "16px", color: "#fff" }}>{item.title}</p>
+                <p style={{ margin: 0, fontSize: "13px", color: "var(--muted)" }}>
+                  By {item.authorName}{item.authorRole ? ` · ${item.authorRole}` : ""}
+                </p>
+              </div>
+
+              {/* Actions */}
+              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "flex-end" }}>
+                <Link
+                  className="button"
+                  href={`/admin/voices/${item.id}/edit`}
+                  style={{ fontSize: "13px", minHeight: "38px", padding: "8px 14px" }}
+                >
+                  Edit
+                </Link>
+
+                {item.status === "PUBLISHED" && (
+                  <Link
+                    className="button"
+                    href={`/gsei-voices/${item.slug}`}
+                    target="_blank"
+                    style={{ fontSize: "13px", minHeight: "38px", padding: "8px 14px" }}
+                  >
+                    View ↗
+                  </Link>
+                )}
+
+                {item.status === "DRAFT" ? (
+                  <form action={setStatus.bind(null, "voice", item.id, ContentStatus.PUBLISHED)}>
+                    <button className="button primary" style={{ fontSize: "13px", minHeight: "38px", padding: "8px 14px" }}>
+                      Publish
+                    </button>
+                  </form>
+                ) : (
+                  <form action={setStatus.bind(null, "voice", item.id, ContentStatus.DRAFT)}>
+                    <button className="button" style={{ fontSize: "13px", minHeight: "38px", padding: "8px 14px" }}>
+                      Unpublish
+                    </button>
+                  </form>
+                )}
+
+                <form style={{ display: "contents" }}>
+                  <button
+                    className="button danger"
+                    style={{ fontSize: "13px", minHeight: "38px", padding: "8px 14px", border: "1px solid rgba(255,107,129,0.4)" }}
+                    formAction={remove.bind(null, "voice", item.id)}
+                    onClick={(e) => {
+                      if (!confirm(`Delete "${item.title}"? This cannot be undone.`)) e.preventDefault();
+                    }}
+                  >
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className="empty" style={{ textAlign: "center" }}>
+          <p style={{ margin: "0 0 16px" }}>
+            {filter === "published" ? "No published GSEI Voices articles." :
+             filter === "draft"     ? "No draft GSEI Voices articles." :
+             "No GSEI Voices articles have been created yet."}
+          </p>
+          <Link className="button primary" href="/admin/voices/new">+ Add Voice</Link>
+        </div>
+      )}
+    </>
+  );
+}

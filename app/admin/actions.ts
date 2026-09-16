@@ -70,3 +70,32 @@ export async function save(kind:Kind,id:string|undefined,form:FormData){
 }
 
 export async function remove(kind:Kind,id:string){await allowed();if(kind==="news")await prisma.news.delete({where:{id}});else await prisma.voice.delete({where:{id}});revalidatePath("/news");revalidatePath("/gsei-voices");redirect(`/admin/${kind==="news"?"news":"voices"}`)}
+
+export async function setStatus(kind: Kind, id: string, status: ContentStatus) {
+  await allowed();
+  if (kind === "news") {
+    const existing = await prisma.news.findUnique({ where: { id } });
+    if (!existing) throw new Error("Not found");
+    await prisma.news.update({
+      where: { id },
+      data: {
+        status,
+        publishedAt: status === ContentStatus.PUBLISHED && !existing.publishedAt ? new Date() : existing.publishedAt,
+      },
+    });
+  } else {
+    const existing = await prisma.voice.findUnique({ where: { id } });
+    if (!existing) throw new Error("Not found");
+    await prisma.voice.update({
+      where: { id },
+      data: {
+        status,
+        publishedAt: status === ContentStatus.PUBLISHED && !existing.publishedAt ? new Date() : existing.publishedAt,
+      },
+    });
+  }
+  revalidatePath("/news");
+  revalidatePath("/gsei-voices");
+  revalidatePath("/admin");
+  revalidatePath(`/admin/${kind === "news" ? "news" : "voices"}`);
+}

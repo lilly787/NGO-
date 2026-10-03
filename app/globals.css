@@ -1,5 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
 body{background:var(--bg)!important;color:var(--ink)!important}.alt{background:var(--paper)!important;color:var(--ink)!important}.hero-title i{background:linear-gradient(100deg,#9c5ed1 0%,#7a38b5 55%,#54227c 100%)!important}.feature{background:linear-gradient(125deg,rgba(156,94,209,.04),transparent)!important;border-radius:24px!important}
+
+/* ── Hero Ribbon Fix: Kill all card/box backgrounds from editorial.css ── */
+.hero,
+.hero[class] {
+  background: transparent !important;
+  padding: 0 !important;
+  min-height: calc(100vh - 86px) !important;
+  align-items: center !important;
+}
+.hero:after,
+.hero:before {
+  display: none !important;
+}
+.hero .shell {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  min-height: unset !important;
+  padding: clamp(60px, 8vw, 120px) 0 !important;
+  overflow: visible !important;
+}
+.hero .shell:after,
+.hero .shell:before {
+  display: none !important;
+}
+/* Remove "Scroll to explore" text */
+.hero .actions:before {
+  display: none !important;
+  content: none !important;
+}
+.hero-title {
+  color: #ffffff !important;
+  font-size: clamp(64px, 8vw, 110px) !important;
+  line-height: 1.0 !important;
+}
+
+/* ── Founder Section Fix ── */
+.founder-frame {
+  max-height: none !important;
+  min-height: 500px !important;
+  overflow: hidden !important;        /* keep content inside card */
+}
+.founder-copy h2 {
+  color: #ffffff !important;
+  font-size: clamp(28px, 3.5vw, 48px) !important;
+  margin: 0 0 10px !important;
+  line-height: 1.1 !important;
+}
+.founder-copy h2 em {
+  color: var(--orchid) !important;
+}
+.founder-copy blockquote {
+  color: var(--ink) !important;
+  font-size: clamp(14px, 1.4vw, 17px) !important;
+  margin: 20px 0 0 !important;
+}
+.founder-copy .founder-role {
+  color: var(--muted) !important;
+  font-size: 11px !important;
+}
+
 .hero-title{font-size:clamp(54px,10.5vw,158px)!important;max-width:100%!important}.hero-title span{display:block;white-space:nowrap}.hero-title span+span{margin-left:clamp(0px,5vw,72px)}.hero-title em{font-style:italic;font-weight:600;color:var(--orchid);position:relative}.hero-title em:after{content:'';position:absolute;left:2%;right:2%;bottom:.04em;height:3px;background:linear-gradient(90deg,transparent,var(--orchid),transparent);transform:scaleX(0);transform-origin:left;animation:lineIn .8s .8s cubic-bezier(.16,1,.3,1) forwards}.hero-title i{font-style:italic;font-weight:600;background:linear-gradient(100deg,var(--plum) 0%,var(--orchid) 55%,#9963c4 100%);color:transparent;background-clip:text;-webkit-background-clip:text}@keyframes lineIn{to{transform:scaleX(1)}}
 :root{--night:#000000;--ink:#fdfcfe;--muted:#a49bae;--plum:#7a38b5;--orchid:#b070e6;--line:rgba(255,255,255,0.1);--paper:#2b1b3d;--bg:#1a1423;--glass-bg:rgba(26,20,35,.85);--glass-border:rgba(255,255,255,.08)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 'Inter',sans-serif}a{color:inherit;text-decoration:none}h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.05;letter-spacing:-.03em;color:#ffffff}.shell{width:min(1280px,calc(100% - 64px));margin:auto}.nav{height:86px;display:flex;justify-content:space-between;gap:28px;align-items:center;border-bottom:1px solid var(--glass-border);position:sticky;top:0;z-index:100;background:var(--glass-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}.brand{font-weight:600;letter-spacing:-.04em;color:#ffffff}.brand small{display:block;font:10px 'DM Mono',monospace;letter-spacing:.11em;text-transform:uppercase;color:var(--orchid)}.links{display:flex;gap:24px;font-size:14px;font-weight:500}.links a{position:relative;color:var(--muted);transition:color .3s ease}.links a:after{content:'';position:absolute;inset:auto 0 -7px;height:2px;background:var(--orchid);transform:scaleX(0);transform-origin:left;transition:transform .35s ease}.links a:hover{color:#ffffff}.links a:hover:after{transform:scaleX(1)}.hero,.section{padding:clamp(88px,12vw,190px) 0}.hero{position:relative;overflow:hidden;min-height:calc(100vh - 86px);display:grid;align-items:end;background:radial-gradient(circle at 80% 20%,rgba(176,112,230,.12) 0,transparent 40%),radial-gradient(circle at 25% 85%,rgba(122,56,181,.08) 0,transparent 35%),var(--bg)}.hero:after{content:'GSEI';position:absolute;right:-.06em;bottom:-.25em;font:700 clamp(150px,32vw,530px)/.8 'Playfair Display';color:rgba(255,255,255,.02);pointer-events:none}.hero .shell{position:relative;z-index:1}.eyebrow{margin:0 0 24px;color:var(--orchid);font:11px 'DM Mono',monospace;letter-spacing:.14em;text-transform:uppercase}.hero h1{max-width:1050px;margin:0;font-size:clamp(72px,13vw,200px);animation:lift .95s cubic-bezier(.16,1,.3,1) both}.lead{max-width:700px;margin:38px 0 0;font-size:clamp(19px,2vw,28px);line-height:1.4}.hero .lead+ p,.hero p:not(.eyebrow):not(.lead){max-width:630px;color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:42px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:12px 24px;border:1px solid var(--line);font-size:14px;font-weight:500;border-radius:12px;transition:transform .3s ease,background .3s ease,border-color .3s ease,box-shadow .3s ease}.button:hover{transform:translateY(-4px);border-color:var(--orchid);box-shadow:0 12px 24px rgba(176,112,230,.15)}.primary{background:var(--plum);border-color:var(--plum);color:#fff}.primary:hover{background:var(--orchid)}.section{border-top:1px solid var(--line)}.section h1{font-size:clamp(56px,10vw,144px);max-width:1000px;margin:0 0 42px}.section h2{font-size:clamp(42px,6vw,90px);max-width:920px;margin:0 0 40px}.grid{display:grid;grid-template-columns:1.1fr .7fr;gap:clamp(30px,9vw,160px);font-size:clamp(18px,2vw,25px);line-height:1.5}.grid p:last-child{color:var(--muted)}.alt{background:var(--paper);color:var(--ink)}.cards{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}.card{min-height:360px;padding:28px 22px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:end;background:var(--bg);transition:background .45s ease,color .45s ease,transform .45s ease,box-shadow .45s ease}.card:before{content:'0' counter(item);counter-increment:item;font:11px 'DM Mono',monospace;letter-spacing:.1em;margin-bottom:auto;color:var(--muted)}.cards{counter-reset:item}.card h3{margin:0 0 14px;font-size:clamp(26px,2.5vw,42px)}.card p{margin:0;font-size:15px;color:var(--muted)}.card:hover{background:var(--bg);color:#ffffff;transform:translateY(-8px);box-shadow:0 24px 48px rgba(0,0,0,.4);border-radius:16px;z-index:2;border-color:var(--orchid)}.card:hover p,.card:hover:before{color:var(--ink)}.feature{max-width:1020px;padding:42px;border:1px solid var(--line);background:linear-gradient(125deg,rgba(176,112,230,.06),transparent);border-radius:24px;transition:transform .45s ease,border-color .45s ease,box-shadow .45s ease}.feature:hover{transform:translateY(-8px);border-color:var(--orchid);box-shadow:0 24px 48px rgba(0,0,0,.3)}.article{max-width:840px}.article h2{font-size:clamp(32px,5vw,58px);margin-top:68px}.article p{font-size:19px;color:var(--ink);line-height:1.7}.empty{padding:50px;border:1px dashed var(--line);color:var(--muted);border-radius:16px}.footer{padding:58px 0;background:#0d0a12;border-top:1px solid var(--line);color:#e2dae8}.footer strong{font:600 clamp(40px,6vw,78px)/1 'Playfair Display';letter-spacing:-.06em;color:#fff}.footer p{color:#a49bae}.form{display:grid;gap:16px;max-width:720px}.form label{display:grid;gap:7px;font-size:14px;font-weight:500}.form input,.form textarea,.form select{width:100%;background:var(--bg);color:var(--ink);font:inherit;padding:16px;border:1px solid var(--line);border-radius:12px;transition:border-color .3s ease}.form input:focus,.form textarea:focus,.form select:focus{outline:none;border-color:var(--orchid)}.admin{background:var(--bg);min-height:100vh}.admin main{padding:80px 0}.admin-nav{padding:18px 0;background:#0d0a12;border-bottom:1px solid var(--line)}.admin-nav .shell{display:flex;gap:20px;align-items:center}.admin-nav a{color:#fff}.danger{color:#ff6b81}
 
@@ -87,17 +153,36 @@ body{background:var(--bg)!important;color:var(--ink)!important}.alt{background:v
 
 @media(max-width:760px){
   .shell{width:min(100% - 36px,1280px)}
-  .hero{min-height:680px}
-  .hero:after{display:none} /* Hide massive watermark on mobile */
+  .hero{min-height:auto}
+  .hero:after{display:none}
   .grid,.cards{grid-template-columns:1fr}
-  .card{min-height:260px;border-bottom:1px solid var(--line);border-right:none}
-  .section h1{font-size:clamp(40px, 10vw, 52px); overflow-wrap: break-word; hyphens: auto;}
+  .card{min-height:220px;border-bottom:1px solid var(--line);border-right:none}
+  .section h1{font-size:clamp(36px, 9vw, 52px); overflow-wrap: break-word; hyphens: auto;}
+  .section h2{font-size:clamp(28px, 7vw, 44px);margin-bottom:28px}
   .feature{padding:26px}
   .shf-pillars{grid-template-columns:1fr}
   .impact-grid{grid-template-columns:repeat(2,1fr)}
   .volunteer-roles{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr}
   .brand small{display:none}
+  /* Hero: two-col → single col on mobile */
+  .hero-two-col{grid-template-columns:1fr !important; gap:32px !important}
+  .hero-title{font-size:clamp(44px, 12vw, 72px) !important}
+  .lead{font-size:clamp(16px, 4.5vw, 20px) !important; margin-top:20px !important}
+  .actions{margin-top:24px !important}
+  /* Programmes cards: 2 cols on tablet */
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .nav-burger span{background:#ffffff}
+}
+
+@media(max-width:480px){
+  .shell{width:min(100% - 24px,1280px)}
+  /* Programmes: 1 col on small phones */
+  .cards{grid-template-columns:1fr}
+  .card{min-height:180px}
+  .hero-title{font-size:clamp(36px, 11vw, 56px) !important}
+  .impact-grid{grid-template-columns:1fr}
+  .section{padding:clamp(48px,10vw,88px) 0}
 }
 
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}

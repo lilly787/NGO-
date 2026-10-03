@@ -3,7 +3,12 @@ import { published } from "@/lib/cms";
 import { firstVoice } from "@/lib/content";
 
 export default async function Voices() {
-  const items = await published("voice");
+  let items: Awaited<ReturnType<typeof published>> = [];
+  try {
+    items = await published("voice");
+  } catch {
+    // DB may be paused (Neon free tier) — fall back to empty/pinned state
+  }
 
   return (
     <main className="section">

@@ -2,7 +2,13 @@ import Link from "next/link";
 import { published } from "@/lib/cms";
 
 export default async function News() {
-  const items = await published("news");
+  let items: Awaited<ReturnType<typeof published>> = [];
+  try {
+    items = await published("news");
+  } catch {
+    // DB may be paused (Neon free tier) — show empty state gracefully
+  }
+
   return (
     <main className="section">
       <div className="shell listing-frame">

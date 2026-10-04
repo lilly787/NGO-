@@ -79,14 +79,18 @@ export default async function NewsAdmin({
                 />
               )}
 
-              {/* Info */}
-              <div>
+              {/* Info — click to view live page or edit */}
+              <Link
+                href={item.status === "PUBLISHED" ? `/news/${item.slug}` : `/admin/news/${item.id}/edit`}
+                target={item.status === "PUBLISHED" ? "_blank" : undefined}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <p style={{ margin: "0 0 4px", fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: ".1em", textTransform: "uppercase", color: item.status === "PUBLISHED" ? "var(--orchid)" : "var(--muted)" }}>
                   {item.status.toLowerCase()}
                   {item.publishedAt && ` · ${new Date(item.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}`}
                 </p>
-                <p style={{ margin: 0, fontWeight: 600, fontSize: "16px", color: "#fff" }}>{item.title}</p>
-              </div>
+                <p style={{ margin: 0, fontWeight: 600, fontSize: "16px", color: "#fff", textDecoration: "underline", textUnderlineOffset: "3px", textDecorationColor: "rgba(255,255,255,0.2)" }}>{item.title}</p>
+              </Link>
 
               {/* Actions */}
               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "flex-end" }}>

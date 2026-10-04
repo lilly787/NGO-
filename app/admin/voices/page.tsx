@@ -79,17 +79,21 @@ export default async function VoicesAdmin({
                 />
               )}
 
-              {/* Info */}
-              <div>
+              {/* Info — click to view live page or edit */}
+              <Link
+                href={item.status === "PUBLISHED" ? `/gsei-voices/${item.slug}` : `/admin/voices/${item.id}/edit`}
+                target={item.status === "PUBLISHED" ? "_blank" : undefined}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <p style={{ margin: "0 0 4px", fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: ".1em", textTransform: "uppercase", color: item.status === "PUBLISHED" ? "var(--orchid)" : "var(--muted)" }}>
                   {item.status.toLowerCase()}
                   {item.publishedAt && ` · ${new Date(item.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}`}
                 </p>
-                <p style={{ margin: "0 0 2px", fontWeight: 600, fontSize: "16px", color: "#fff" }}>{item.title}</p>
+                <p style={{ margin: "0 0 2px", fontWeight: 600, fontSize: "16px", color: "#fff", textDecoration: "underline", textUnderlineOffset: "3px", textDecorationColor: "rgba(255,255,255,0.2)" }}>{item.title}</p>
                 <p style={{ margin: 0, fontSize: "13px", color: "var(--muted)" }}>
                   By {item.authorName}{item.authorRole ? ` · ${item.authorRole}` : ""}
                 </p>
-              </div>
+              </Link>
 
               {/* Actions */}
               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "flex-end" }}>

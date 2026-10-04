@@ -4,6 +4,7 @@ import { isAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { remove, setStatus } from "@/app/admin/actions";
 import { ContentStatus } from "@prisma/client";
+import { DeleteButton } from "@/components/admin-delete-button";
 
 export default async function NewsAdmin({
   searchParams,
@@ -18,7 +19,12 @@ export default async function NewsAdmin({
     filter === "draft"     ? { status: ContentStatus.DRAFT }     :
     {};
 
-  const items = await prisma.news.findMany({ where, orderBy: { updatedAt: "desc" } });
+  let items: Awaited<ReturnType<typeof prisma.news.findMany>> = [];
+  try {
+    items = await prisma.news.findMany({ where, orderBy: { updatedAt: "desc" } });
+  } catch {
+    // DB may be paused
+  }
 
   return (
     <>
@@ -117,21 +123,7 @@ export default async function NewsAdmin({
                   </form>
                 )}
 
-                <form
-                  action={remove.bind(null, "news", item.id)}
-                  onSubmit={undefined}
-                  style={{ display: "contents" }}
-                >
-                  <button
-                    className="button danger"
-                    style={{ fontSize: "13px", minHeight: "38px", padding: "8px 14px", border: "1px solid rgba(255,107,129,0.4)" }}
-                    onClick={(e) => {
-                      if (!confirm(`Delete "${item.title}"? This cannot be undone.`)) e.preventDefault();
-                    }}
-                  >
-                    Delete
-                  </button>
-                </form>
+                <DeleteButton title={item.title} action={remove.bind(null, "news", item.id)} />
               </div>
             </article>
           ))}

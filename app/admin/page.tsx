@@ -6,17 +6,31 @@ import { prisma } from "@/lib/prisma";
 export default async function AdminDashboard() {
   if (!await isAdmin()) redirect("/admin/login");
 
-  const [newsTotal, newsPublished, newsDraft, voiceTotal, voicePublished, voiceDraft] = await Promise.all([
-    prisma.news.count(),
-    prisma.news.count({ where: { status: "PUBLISHED" } }),
-    prisma.news.count({ where: { status: "DRAFT" } }),
-    prisma.voice.count(),
-    prisma.voice.count({ where: { status: "PUBLISHED" } }),
-    prisma.voice.count({ where: { status: "DRAFT" } }),
-  ]);
+  let newsTotal = 0, newsPublished = 0, newsDraft = 0;
+  let voiceTotal = 0, voicePublished = 0, voiceDraft = 0;
+
+  try {
+    [newsTotal, newsPublished, newsDraft, voiceTotal, voicePublished, voiceDraft] = await Promise.all([
+      prisma.news.count(),
+      prisma.news.count({ where: { status: "PUBLISHED" } }),
+      prisma.news.count({ where: { status: "DRAFT" } }),
+      prisma.voice.count(),
+      prisma.voice.count({ where: { status: "PUBLISHED" } }),
+      prisma.voice.count({ where: { status: "DRAFT" } }),
+    ]);
+  } catch {
+    // DB may be paused — counts stay at 0
+  }
 
   return (
     <>
+      <style>{`
+        .stat-card { padding: 28px 24px; border: 1px solid var(--line); border-radius: 16px;
+          background: linear-gradient(135deg, rgba(176,112,230,0.06), transparent);
+          transition: border-color .3s, transform .3s; }
+        .stat-card:hover { border-color: var(--orchid); transform: translateY(-4px); }
+      `}</style>
+
       <p className="eyebrow">Dashboard</p>
       <h1>Welcome to GSEI Admin</h1>
       <p style={{ color: "var(--muted)", marginBottom: "48px" }}>
@@ -34,22 +48,7 @@ export default async function AdminDashboard() {
           { label: "Draft Voices", value: voiceDraft, href: "/admin/voices?filter=draft" },
         ].map(({ label, value, href }) => (
           <Link key={label} href={href} style={{ textDecoration: "none" }}>
-            <div style={{
-              padding: "28px 24px",
-              border: "1px solid var(--line)",
-              borderRadius: "16px",
-              background: "linear-gradient(135deg, rgba(176,112,230,0.06), transparent)",
-              transition: "border-color .3s, transform .3s",
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.borderColor = "var(--orchid)";
-              (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.borderColor = "var(--line)";
-              (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-            }}
-            >
+            <div className="stat-card">
               <p style={{ margin: "0 0 8px", color: "var(--muted)", fontSize: "11px", fontFamily: "'DM Mono', monospace", letterSpacing: ".1em", textTransform: "uppercase" }}>{label}</p>
               <p style={{ margin: 0, fontSize: "42px", fontWeight: 700, fontFamily: "'Playfair Display', serif", color: "#fff", lineHeight: 1 }}>{value}</p>
             </div>

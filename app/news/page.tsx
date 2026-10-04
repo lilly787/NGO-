@@ -2,7 +2,8 @@ import Link from "next/link";
 import { published } from "@/lib/cms";
 
 export default async function News() {
-  let items: Awaited<ReturnType<typeof published>> = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let items: any[] = [];
   try {
     items = await published("news");
   } catch {

@@ -3,7 +3,8 @@ import { published } from "@/lib/cms";
 import { firstVoice } from "@/lib/content";
 
 export default async function Voices() {
-  let items: Awaited<ReturnType<typeof published>> = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let items: any[] = [];
   try {
     items = await published("voice");
   } catch {

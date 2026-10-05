@@ -43,6 +43,13 @@ export default async function Story({
         </p>
       )}
       <div dangerouslySetInnerHTML={{ __html: item.content }} />
+      {item.galleryImages.length > 0 && (
+        <section className="news-gallery" aria-label="Story images">
+          {item.galleryImages.map((imageUrl, index) => (
+            <img key={imageUrl} src={imageUrl} alt={`${item.title} image ${index + 1}`} />
+          ))}
+        </section>
+      )}
     </main>
   );
 }

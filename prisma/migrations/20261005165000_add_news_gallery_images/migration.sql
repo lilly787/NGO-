@@ -1,0 +1,1 @@
+ALTER TABLE "News" ADD COLUMN "galleryImages" TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[];

@@ -29,6 +29,11 @@ export async function save(kind:Kind,id:string|undefined,form:FormData){
     status,
   };
 
+  const galleryImages = JSON.parse(String(form.get("galleryImages") || "[]"));
+  if (!Array.isArray(galleryImages) || galleryImages.some((url) => typeof url !== "string")) {
+    throw new Error("Invalid gallery images.");
+  }
+
   if(!data.content)throw new Error("Content is required.");
 
   // Handle publishedAt logic
@@ -40,6 +45,7 @@ export async function save(kind:Kind,id:string|undefined,form:FormData){
   }
 
   if(kind==="news"){
+    data.galleryImages = galleryImages;
     if(id) {
       const existing = await prisma.news.findUnique({where: {id}});
       if (!existing) throw new Error("Not found");

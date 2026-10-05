@@ -3,6 +3,7 @@ import { save } from "@/app/admin/actions";
 import type { Kind } from "@/lib/cms";
 import { RichTextEditor } from "@/components/rich-text-editor";
 import { ImageUploader } from "@/components/image-uploader";
+import { MultiImageUploader } from "@/components/multi-image-uploader";
 
 export function ContentForm({ kind, item }: { kind: Kind; item?: any }) {
   return (
@@ -29,6 +30,13 @@ export function ContentForm({ kind, item }: { kind: Kind; item?: any }) {
         <span style={{ fontSize: "14px", fontWeight: 500 }}>Featured image <small style={{ fontWeight: 400, color: "var(--muted)" }}>(optional)</small></span>
         <ImageUploader name="featuredImage" defaultValue={item?.featuredImage || ""} />
       </div>
+
+      {kind === "news" && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+          <span style={{ fontSize: "14px", fontWeight: 500 }}>News gallery <small style={{ fontWeight: 400, color: "var(--muted)" }}>(optional)</small></span>
+          <MultiImageUploader name="galleryImages" defaultValue={item?.galleryImages || []} />
+        </div>
+      )}
 
       <label>
         Content

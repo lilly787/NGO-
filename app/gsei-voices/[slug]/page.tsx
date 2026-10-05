@@ -35,7 +35,7 @@ export default async function Article({
           />
         )}
         <p className="eyebrow">GSEI Voices</p>
-        <h1>{item.title}</h1>
+        <h1 className="voice-article-title">{item.title}</h1>
         <p className="article-meta">
           By <strong>{item.authorName}</strong>
           {item.authorRole ? `, ${item.authorRole}` : ""}
@@ -65,7 +65,7 @@ export default async function Article({
     return (
       <main className="section shell article">
         <p className="eyebrow">GSEI Voices</p>
-        <h1>{firstVoice.title}</h1>
+        <h1 className="voice-article-title">{firstVoice.title}</h1>
         <p className="article-meta">
           By <strong>{firstVoice.authorName}</strong>
         </p>
